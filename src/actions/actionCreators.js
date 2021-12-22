@@ -58,10 +58,9 @@ export function fetchPuzzleSolution() {
     console.log("actionCreators: fetchPuzzleSolution()");
 
     var requestPayload = {};
-    //TODO convert to get current state from Redux Store
     requestPayload.rows = buildRequest();
 
-    request.post('https://aqfhv970kg.execute-api.us-west-1.amazonaws.com/test/sudoku')
+    request.post(config.solverUrl)
         .send(requestPayload)
         .set('Content-Type', 'application/json')
         .timeout({
@@ -75,24 +74,12 @@ export function fetchPuzzleSolution() {
                 console.log("success: ");
                 console.log(JSON.stringify(res));
                 if (res.body.errorMessage) {
-                    //Flux dispatch response
-                    //AppDispatcher.dispatch({
-                    //    actionName: 'ERROR',
-                    //    message: "Failed to solve puzzle, is it a valid puzzle with a single solution?"
-                    //});
                     store.dispatch( {
                         type: 'ERROR',
                         message: "Failed to solve puzzle, is it a valid puzzle with a single solution?"
                     });
                 } else {
-                    //dispatch response
-                    //var parsedData = SudokuSolverAction.parseResponse(res.body);
                     var parsedData = parseResponse(res.body.rows);
-                    //Flux dispatch approach
-                    //AppDispatcher.dispatch({
-                    //    actionName: 'UPDATE',
-                    //    data: parsedData
-                    //});
                     store.dispatch( {
                         type: 'UPDATE',
                         data: parsedData
@@ -107,7 +94,6 @@ export function getPuzzle(difficulty) {
 
     var requestPayload = {};
 
-    //request.get('https://7ivvexkae1.execute-api.us-west-1.amazonaws.com/sudoku/puzzle?difficulty=' + difficulty)
     request.get(config.getPuzzleUrl + '?difficulty=' + difficulty)
         .set('Content-Type', 'application/json')
         .timeout({
@@ -121,24 +107,12 @@ export function getPuzzle(difficulty) {
                 console.log("success: ");
                 console.log(JSON.stringify(res));
                 if (res.body.errorMessage) {
-                    //Flux dispatch response
-                    //AppDispatcher.dispatch({
-                    //    actionName: 'ERROR',
-                    //    message: "Failed to solve puzzle, is it a valid puzzle with a single solution?"
-                    //});
                     store.dispatch( {
                         type: 'ERROR',
                         message: "Failed to get puzzle?"
                     });
                 } else {
-                    //dispatch response
-                    //var parsedData = SudokuSolverAction.parseResponse(res.body);
                     var parsedData = parseResponse(res.body.data.puzzle.puzzle);
-                    //Flux dispatch approach
-                    //AppDispatcher.dispatch({
-                    //    actionName: 'UPDATE',
-                    //    data: parsedData
-                    //});
                     store.dispatch( {
                         type: 'UPDATE',
                         data: parsedData,
@@ -167,10 +141,6 @@ function parseResponse(response){
 //builds request to Solver API (AWS Lambda)
 function buildRequest(){
     var requestData = [];
-    //Previous Flux approach
-    //use slice() to clone the original array, to not modify it directly
-    //var currentData = SudokuSolverStore.getData().slice();
-    //get state from Redux store
     var currentData = store.getState().grid;
 
     console.log("current data: " + JSON.stringify(currentData));
