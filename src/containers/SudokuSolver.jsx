@@ -1,24 +1,25 @@
 import React, {Component} from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CellComponent from "../components/CellComponent";
+import PuzzleControls from "../components/puzzleControls/PuzzleControls";
 import { connect } from 'react-redux';
 import { updatePuzzleData, updateSpinner, clearData, initSamplePuzzle, fetchPuzzleSolution, getPuzzle } from '../actions/actionCreators';
 
 const mapStateToProps = state => {
     //if grid is undefined, initialize with empty arrays which we use later
     //to draw the grid
-    if(state.grid == null){
-        state.grid = [];
+    if(state.puzzle.grid == null){
+        state.puzzle.grid = [];
         for (var row = 0; row < 9; row++) {
-            state.grid[row] = [];
+            state.puzzle.grid[row] = [];
         }
     }
     return { 
-        grid: state.grid,
-        message: state.message,
-        showSpinner: state.showSpinner,
-        puzzleId: state.puzzleId,
-        puzzleDifficulty: state.puzzleDifficulty
+        grid: state.puzzle.grid,
+        message: state.puzzle.message,
+        showSpinner: state.puzzle.showSpinner,
+        puzzleId: state.puzzle.puzzleId,
+        puzzleDifficulty: state.puzzle.puzzleDifficulty
      };
 };
 
@@ -144,6 +145,12 @@ class ConnectedSudokuSolver extends Component {
                     <div>
                         <button onClick={() => this.handleGetPuzzle('HARD')}>Load hard puzzle</button>
                     </div>
+
+                    <div>
+                        <p>Puzzle id:</p>
+                        <p>{ this.props.puzzleId }</p>
+                        <p>Difficulty: { this.props.puzzleDifficulty }</p>
+                    </div>
                 </div>
                 <div className="sudoku-grid-container">
                     <table className="sudoku-grid">
@@ -242,10 +249,8 @@ class ConnectedSudokuSolver extends Component {
                         </tbody>
                     </table>
                 </div>
-                <div className="puzzle-info">
-                    <p>Puzzle id:</p>
-                    <p>{ this.props.puzzleId }</p>
-                    <p>Difficulty: { this.props.puzzleDifficulty }</p>
+                <div className="controls-container">
+                    <PuzzleControls/>
                 </div>
             </div>
         );

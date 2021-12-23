@@ -12,6 +12,12 @@
   flex: 1;
 }
 
+.controls-container{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .sudoku-grid-container{
   justify-content: center;
   flex-grow:1;
@@ -70,4 +76,8 @@
 /* bottom border for every 3rd tr row */
 .sudoku-grid tbody tr:nth-child(3n){
   border-bottom: 3px solid;
+}
+
+.buttonSelected {
+  border: 2px solid #010191;
 }
