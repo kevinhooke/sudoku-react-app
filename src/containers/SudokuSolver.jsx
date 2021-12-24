@@ -3,36 +3,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CellComponent from "../components/CellComponent";
 import PuzzleControls from "../components/puzzleControls/PuzzleControls";
 import { connect } from 'react-redux';
-import { updatePuzzleData, updateSpinner, clearData, initSamplePuzzle, fetchPuzzleSolution, getPuzzle } from '../actions/actionCreators';
-
-const mapStateToProps = state => {
-    //if grid is undefined, initialize with empty arrays which we use later
-    //to draw the grid
-    if(state.puzzle.grid == null){
-        state.puzzle.grid = [];
-        for (var row = 0; row < 9; row++) {
-            state.puzzle.grid[row] = [];
-        }
-    }
-    return { 
-        grid: state.puzzle.grid,
-        message: state.puzzle.message,
-        showSpinner: state.puzzle.showSpinner,
-        puzzleId: state.puzzle.puzzleId,
-        puzzleDifficulty: state.puzzle.puzzleDifficulty
-     };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        updatePuzzleData :  grid => dispatch(updatePuzzleData(grid)),
-        clearData : () => dispatch(clearData()),
-        initSamplePuzzle : () => dispatch(initSamplePuzzle()),
-        fetchPuzzleSolution : () => dispatch(fetchPuzzleSolution()),
-        getPuzzle : (difficulty) => dispatch(getPuzzle(difficulty)),
-        updateSpinner : (value) => dispatch(updateSpinner(value))
-    }
-}
+import { updatePuzzleData, updateSpinner, clearData, initSamplePuzzle, 
+    fetchPuzzleStarting, getPuzzle,
+    fetchSolutionStarting, fetchPuzzleSolution } from '../actions/actionCreators';
 
 //TODO validation on input fields
 
@@ -76,6 +49,7 @@ class SudokuSolver extends Component {
     handleSubmit(event) {
         event.preventDefault();
         console.log("submit pressed");
+        this.props.fetchSolutionStarting();
         this.props.updateSpinner("true");
         this.props.fetchPuzzleSolution();
         //this.props.updateSpinner(false);
@@ -92,7 +66,8 @@ class SudokuSolver extends Component {
     }
 
     handleGetPuzzle = (difficulty) => {
-        console.log("handleGetPuzzle(): " + difficulty)
+        console.log("handleGetPuzzle(): " + difficulty);
+        this.props.fetchPuzzleStarting();
         this.props.updateSpinner("true");
         this.props.getPuzzle(difficulty);
     }
@@ -250,6 +225,37 @@ class SudokuSolver extends Component {
         );
     }
 
+}
+
+const mapStateToProps = state => {
+    //if grid is undefined, initialize with empty arrays which we use later
+    //to draw the grid
+    if(state.puzzle.grid == null){
+        state.puzzle.grid = [];
+        for (var row = 0; row < 9; row++) {
+            state.puzzle.grid[row] = [];
+        }
+    }
+    return { 
+        grid: state.puzzle.grid,
+        message: state.puzzle.message,
+        showSpinner: state.puzzle.showSpinner,
+        puzzleId: state.puzzle.puzzleId,
+        puzzleDifficulty: state.puzzle.puzzleDifficulty
+     };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updatePuzzleData :  grid => dispatch(updatePuzzleData(grid)),
+        clearData : () => dispatch(clearData()),
+        initSamplePuzzle : () => dispatch(initSamplePuzzle()),
+        fetchSolutionStarting : () => dispatch(fetchSolutionStarting()),
+        fetchPuzzleSolution : () => dispatch(fetchPuzzleSolution()),
+        fetchPuzzleStarting : () => dispatch(fetchPuzzleStarting()),
+        getPuzzle : (difficulty) => dispatch(getPuzzle(difficulty)),
+        updateSpinner : (value) => dispatch(updateSpinner(value))
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SudokuSolver);

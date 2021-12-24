@@ -1,7 +1,14 @@
 import store from '../stores/SudokuSolverReduxStore';
 import request from 'superagent';
 import axios from 'axios';
-import { NEW_DATA, UPDATE_SPINNER } from './ActionConstants';
+import { NEW_DATA, 
+    UPDATE_SPINNER, 
+    CLEAR_GRID,
+    RESET_SAMPLE_PUZZLE,
+    RETRIEVE_SOLUTION_STARTING,
+    RETRIEVE_SOLUTION_SUCCESS,
+    RETRIEVE_PUZZLE_STARTING,
+    RETRIEVE_PUZZLE_SUCCESS } from './ActionConstants'; 
 import config from '../config.js';
 
 const emptyGrid = {
@@ -20,7 +27,7 @@ const emptyGrid = {
 }
 
 export function clearData(){
-    return { type: NEW_DATA, showSpinner : false, grid: emptyGrid.rows }
+    return { type: CLEAR_GRID, showSpinner : false, grid: emptyGrid.rows }
 }
 
 export function updateSpinner(value){
@@ -50,7 +57,7 @@ export function initSamplePuzzle(){
     }
 
     return {
-        type: 'NEW_DATA',
+        type: RESET_SAMPLE_PUZZLE,
         grid: puzzle.rows
     };
 }
@@ -62,9 +69,21 @@ export const fetchPuzzleFailed = (payload) => {
     }
 }
 
+export const fetchSolutionStarting = () => {
+    return {
+        type: RETRIEVE_SOLUTION_STARTING
+    }
+}
+
+export const fetchPuzzleStarting = () => {
+    return {
+        type: RETRIEVE_PUZZLE_STARTING
+    }
+}
+
 export const fetchPuzzleSucess = (updatePayload) => {
     return {
-        type: 'UPDATE',
+        type: RETRIEVE_SOLUTION_SUCCESS,
         payload: updatePayload
     }
 }
@@ -141,7 +160,7 @@ export const getPuzzle = (difficulty) => async (dispatch) => {
                         puzzleDifficulty: res.body.data.puzzle.difficulty
                     }
                     dispatch({
-                        type: 'PUZZLE_RETRIEVED',
+                        type: RETRIEVE_PUZZLE_SUCCESS,
                         payload: updatePayload
                     })
                 }

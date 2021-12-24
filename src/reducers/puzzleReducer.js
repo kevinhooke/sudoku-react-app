@@ -1,15 +1,34 @@
+import { NEW_DATA,
+    UPDATE_SPINNER,
+    CLEAR_GRID,
+    RESET_SAMPLE_PUZZLE,
+    RETRIEVE_SOLUTION_STARTING,
+    RETRIEVE_SOLUTION_SUCCESS,
+    RETRIEVE_PUZZLE_STARTING,
+    RETRIEVE_PUZZLE_SUCCESS } from '../actions/ActionConstants'; 
+
 //initial state
 var puzzleData = {
-    showSpinner: false
+    showSpinner: false,
+    fetchPuzzleStarted: false
 }
 
 export function puzzleDataReducer(state = puzzleData, action) {
+    console.log("puzzleDataReducer is handling: " + action.type);
+
     switch (action.type) {
         case 'EXAMPLE_ACTION':
             return Object.assign( {},{ labelValue : action.payload } );
 
-        case 'NEW_DATA' :
-            console.log("puzzleDataReducer is handling NEW_DATA action! ");
+        case RETRIEVE_PUZZLE_STARTING:
+            return {
+                ...state,
+                fetchPuzzleStarted: true
+            }
+
+        case RESET_SAMPLE_PUZZLE:
+        case CLEAR_GRID:
+        case NEW_DATA:
             return { ...state, 
                 showSpinner: "false",
                 grid: action.grid,
@@ -17,9 +36,7 @@ export function puzzleDataReducer(state = puzzleData, action) {
                 puzzleDifficulty: action.puzzleDifficulty
              };
 
-        case 'UPDATE':
-            console.log("puzzleDataReducer is handling UPDATE action!: "
-                + JSON.stringify(action.payload));
+        case RETRIEVE_SOLUTION_SUCCESS:
             var newData = [];
 
             for(var row in action.payload.data){
@@ -28,12 +45,11 @@ export function puzzleDataReducer(state = puzzleData, action) {
             }
             return { ...state, 
                 grid : newData,
-                showSpinner : "false"
+                showSpinner : "false",
+                fetchPuzzleStarted: false
             };
 
-        case 'PUZZLE_RETRIEVED':
-            console.log("puzzleDataReducer is handling PUZZLE_RETRIEVED action!: "
-                + JSON.stringify(action.payload));
+        case RETRIEVE_PUZZLE_SUCCESS:
             var newData = [];
 
             for(var row in action.payload.data){
@@ -47,13 +63,10 @@ export function puzzleDataReducer(state = puzzleData, action) {
                 puzzleDifficulty: action.payload.puzzleDifficulty
             };
 
-
         case 'ERROR' :
-            console.log("puzzleDataReducer is handling ERROR action!");
             return{ ...state, message : action.message};
 
         case 'UPDATE_SPINNER' :
-            console.log("puzzleDataReducer is handling UPDATE_SPINNER action!");
             return { ...state, showSpinner : action.showSpinner };
 
         default:

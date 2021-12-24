@@ -11,7 +11,8 @@ const PuzzleControls = (props) => {
             <div>Controls</div>
             
             <div>
-                <button onClick={props.togglePencilSelection}>
+                <button onClick={props.togglePencilSelection}
+                    className={props.pencilControlSelected ? 'buttonSelected' : ''}>
                     <img src={pencilImg} alt="pencil image"/>
                 </button>
             </div>
