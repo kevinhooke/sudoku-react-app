@@ -19,12 +19,12 @@ export function puzzleDataReducer(state = puzzleData, action) {
 
         case 'UPDATE':
             console.log("puzzleDataReducer is handling UPDATE action!: "
-                + JSON.stringify(action.data));
+                + JSON.stringify(action.payload));
             var newData = [];
 
-            for(var row in action.data){
-                console.log("row: " + JSON.stringify(action.data[row]));
-                newData[row] = action.data[row];
+            for(var row in action.payload.data){
+                console.log("row: " + JSON.stringify(action.payload.data[row]));
+                newData[row] = action.payload.data[row];
             }
             return { ...state, 
                 grid : newData,

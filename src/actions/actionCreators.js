@@ -1,5 +1,6 @@
 import store from '../stores/SudokuSolverReduxStore';
 import request from 'superagent';
+import axios from 'axios';
 import { NEW_DATA, UPDATE_SPINNER } from './ActionConstants';
 import config from '../config.js';
 
@@ -54,7 +55,7 @@ export function initSamplePuzzle(){
     };
 }
 
-export function fetchPuzzleSolution() {
+export const fetchPuzzleSolution = () => (dispatch) => {
     console.log("actionCreators: fetchPuzzleSolution()");
 
     var requestPayload = {};
@@ -74,22 +75,28 @@ export function fetchPuzzleSolution() {
                 console.log("success: ");
                 console.log(JSON.stringify(res));
                 if (res.body.errorMessage) {
-                    store.dispatch( {
-                        type: 'ERROR',
+                    let payload = {
                         message: "Failed to solve puzzle, is it a valid puzzle with a single solution?"
-                    });
+                    }
+                    dispatch({
+                        type: 'ERROR',
+                        payload: payload
+                    })
                 } else {
                     var parsedData = parseResponse(res.body.rows);
-                    store.dispatch( {
-                        type: 'UPDATE',
+                    let updatePayload = {
                         data: parsedData
-                    });
+                    }
+                    dispatch({
+                        type: 'UPDATE',
+                        payload: updatePayload
+                    })
                 }
             }
         });
 }
 
-export function getPuzzle(difficulty) {
+export const getPuzzle = (difficulty) => async (dispatch) => {
     console.log("actionCreators: getPuzzle(): " + difficulty);
 
     var requestPayload = {};
@@ -106,19 +113,29 @@ export function getPuzzle(difficulty) {
             } else {
                 console.log("success: ");
                 console.log(JSON.stringify(res));
+                console.log("1");
                 if (res.body.errorMessage) {
-                    store.dispatch( {
-                        type: 'ERROR',
+                    console.log("2a error");
+                    let payload = {
                         message: "Failed to get puzzle?"
-                    });
+                    }
+                    dispatch({
+                        type: 'ERROR',
+                        payload: payload
+                    })
                 } else {
+                    console.log("2b not error");
                     var parsedData = parseResponse(res.body.data.puzzle.puzzle);
-                    store.dispatch( {
-                        type: 'UPDATE',
+                    console.log("3 before returning UODATE action");
+                    let updatePayload = {
                         data: parsedData,
                         puzzleId : res.body.data.puzzle.id,
                         puzzleDifficulty: res.body.data.puzzle.difficulty
-                    });
+                    }
+                    dispatch({
+                        type: 'UPDATE',
+                        payload: updatePayload
+                    })
                 }
             }
         });
@@ -141,7 +158,7 @@ function parseResponse(response){
 //builds request to Solver API (AWS Lambda)
 function buildRequest(){
     var requestData = [];
-    var currentData = store.getState().grid;
+    var currentData = store.getState().puzzle.grid;
 
     console.log("current data: " + JSON.stringify(currentData));
     for (var row=0;row<9;row++) {

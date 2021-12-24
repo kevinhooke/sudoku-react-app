@@ -28,8 +28,8 @@ const mapDispatchToProps = (dispatch) => {
         updatePuzzleData :  grid => dispatch(updatePuzzleData(grid)),
         clearData : () => dispatch(clearData()),
         initSamplePuzzle : () => dispatch(initSamplePuzzle()),
-        fetchPuzzleSolution : () => fetchPuzzleSolution(),
-        getPuzzle : (difficulty) => getPuzzle(difficulty),
+        fetchPuzzleSolution : () => dispatch(fetchPuzzleSolution()),
+        getPuzzle : (difficulty) => dispatch(getPuzzle(difficulty)),
         updateSpinner : (value) => dispatch(updateSpinner(value))
     }
 }
@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch) => {
 
 //TODO spruce up error message box
 
-class ConnectedSudokuSolver extends Component {
+class SudokuSolver extends Component {
 
     constructor(props) {
         super(props);
@@ -61,7 +61,6 @@ class ConnectedSudokuSolver extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClear = this.handleClear.bind(this);
         this.handleResetSample = this.handleResetSample.bind(this);
-        this.updateSpinner = this.updateSpinner(this);
     };
 
     //handler approach 2:
@@ -107,11 +106,6 @@ class ConnectedSudokuSolver extends Component {
 
     onError(){
         console.log('SudokuSolver onError triggered');
-    }
-
-    updateSpinner(value){
-        //TODO how to update only one vale, preserving rest of state in store
-        this.props.updateSpinner(value);
     }
 
     render() {
@@ -258,6 +252,4 @@ class ConnectedSudokuSolver extends Component {
 
 }
 
-const SudokuSolver = connect(mapStateToProps, mapDispatchToProps)(ConnectedSudokuSolver);
-
-export default SudokuSolver;
+export default connect(mapStateToProps, mapDispatchToProps)(SudokuSolver);
