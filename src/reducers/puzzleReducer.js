@@ -28,9 +28,23 @@ export function puzzleDataReducer(state = puzzleData, action) {
             }
             return { ...state, 
                 grid : newData,
+                showSpinner : "false"
+            };
+
+        case 'PUZZLE_RETRIEVED':
+            console.log("puzzleDataReducer is handling PUZZLE_RETRIEVED action!: "
+                + JSON.stringify(action.payload));
+            var newData = [];
+
+            for(var row in action.payload.data){
+                console.log("row: " + JSON.stringify(action.payload.data[row]));
+                newData[row] = action.payload.data[row];
+            }
+            return { ...state, 
+                grid : newData,
                 showSpinner : "false",
-                puzzleId: action.puzzleId,
-                puzzleDifficulty: action.puzzleDifficulty
+                puzzleId: action.payload.puzzleId,
+                puzzleDifficulty: action.payload.puzzleDifficulty
             };
 
 

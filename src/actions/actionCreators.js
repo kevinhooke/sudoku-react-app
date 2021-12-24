@@ -55,6 +55,20 @@ export function initSamplePuzzle(){
     };
 }
 
+export const fetchPuzzleFailed = (payload) => {
+    return {
+        type: 'ERROR',
+        payload: payload
+    }
+}
+
+export const fetchPuzzleSucess = (updatePayload) => {
+    return {
+        type: 'UPDATE',
+        payload: updatePayload
+    }
+}
+
 export const fetchPuzzleSolution = () => (dispatch) => {
     console.log("actionCreators: fetchPuzzleSolution()");
 
@@ -78,19 +92,13 @@ export const fetchPuzzleSolution = () => (dispatch) => {
                     let payload = {
                         message: "Failed to solve puzzle, is it a valid puzzle with a single solution?"
                     }
-                    dispatch({
-                        type: 'ERROR',
-                        payload: payload
-                    })
+                    dispatch(fetchPuzzleFailed(payload));
                 } else {
                     var parsedData = parseResponse(res.body.rows);
                     let updatePayload = {
                         data: parsedData
                     }
-                    dispatch({
-                        type: 'UPDATE',
-                        payload: updatePayload
-                    })
+                    dispatch(fetchPuzzleSucess(updatePayload));
                 }
             }
         });
@@ -133,7 +141,7 @@ export const getPuzzle = (difficulty) => async (dispatch) => {
                         puzzleDifficulty: res.body.data.puzzle.difficulty
                     }
                     dispatch({
-                        type: 'UPDATE',
+                        type: 'PUZZLE_RETRIEVED',
                         payload: updatePayload
                     })
                 }
