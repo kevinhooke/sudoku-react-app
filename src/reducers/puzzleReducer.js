@@ -41,7 +41,7 @@ export function puzzleDataReducer(state = puzzleData, action) {
 
             for(var row in action.payload.data){
                 console.log("row: " + JSON.stringify(action.payload.data[row]));
-                newData[row] = action.payload.data[row];
+                newData[row] = action.payload.data[row].map( (currentValue) => ( { value: currentValue, initialGiven: false } ) );
             }
             return { ...state, 
                 grid : newData,
@@ -54,7 +54,7 @@ export function puzzleDataReducer(state = puzzleData, action) {
 
             for(var row in action.payload.data){
                 console.log("row: " + JSON.stringify(action.payload.data[row]));
-                newData[row] = action.payload.data[row];
+                newData[row] = action.payload.data[row].map( (currentValue) => ( { value: currentValue, initialGiven: false } ) );
             }
             return { ...state, 
                 grid : newData,

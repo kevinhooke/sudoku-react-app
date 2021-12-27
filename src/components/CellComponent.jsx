@@ -13,9 +13,17 @@ class CellComponent extends Component {
     }
 
     render() {
+        let cell = null;
+        if(this.props.value.initialGiven){
+            cell = <span>{this.props.value.value}</span>
+        }
+        else{
+            cell = <input className="cell" type="text" value={this.props.value.value} onChange={this.handleChange}/>
+        }
+
         return (
             <span className="label">
-                <input className="cell" type="text" value={this.props.value} onChange={this.handleChange}/>
+                { cell }
             </span>
         );
     }

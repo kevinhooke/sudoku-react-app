@@ -14,15 +14,15 @@ import config from '../config.js';
 const emptyGrid = {
     rows:
         [
-            ["", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", ""]
+            [ {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }],
+            [ {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }],
+            [ {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }],
+            [ {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }],
+            [ {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }],
+            [ {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }],
+            [ {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }],
+            [ {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }],
+            [ {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }],
         ]
 }
 
@@ -44,15 +44,15 @@ export function initSamplePuzzle(){
         showSpinner : "false",
         rows:
             [
-                ["", "", "", "8", "1", "", "6", "7", ""],
-                ["", "", "7", "4", "9", "", "2", "", "8"],
-                ["", "6", "", "", "5", "", "1", "", "4"],
-                ["1", "", "", "", "", "3", "9", "", ""],
-                ["4", "", "", "", "8", "", "", "", "7"],
-                ["", "", "6", "9", "", "", "", "", "3"],
-                ["9", "", "2", "", "3", "", "", "6", ""],
-                ["6", "", "1", "", "7", "4", "3", "", ""],
-                ["", "3", "4", "", "6", "9", "", "", ""]
+                [{value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "8", initialGiven: true }, {value: "1", initialGiven: true }, {value: "", initialGiven: false }, {value: "6", initialGiven: true }, {value: "7", initialGiven: true }, {value: "", initialGiven: false }],
+                [{value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "7", initialGiven: true }, {value: "4", initialGiven: true }, {value: "9", initialGiven: true }, {value: "", initialGiven: false }, {value: "2", initialGiven: true }, {value: "", initialGiven: false }, {value: "8", initialGiven: true }],
+                [{value: "", initialGiven: false }, {value: "6", initialGiven: true }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "5", initialGiven: true }, {value: "", initialGiven: false }, {value: "1", initialGiven: true }, {value: "", initialGiven: false }, {value: "4", initialGiven: true }],
+                [{value: "1", initialGiven: true }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "3", initialGiven: true }, {value: "9", initialGiven: true }, {value: "", initialGiven: false }, {value: "", initialGiven: false }],
+                [{value: "4", initialGiven: true }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "8", initialGiven: true }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "7", initialGiven: true }],
+                [{value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "6", initialGiven: true }, {value: "9", initialGiven: true }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "3", initialGiven: true }],
+                [{value: "9", initialGiven: true }, {value: "", initialGiven: false }, {value: "2", initialGiven: true }, {value: "", initialGiven: false }, {value: "3", initialGiven: true }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "6", initialGiven: true }, {value: "", initialGiven: false }],
+                [{value: "6", initialGiven: true }, {value: "", initialGiven: false }, {value: "1", initialGiven: true }, {value: "", initialGiven: false }, {value: "7", initialGiven: true }, {value: "4", initialGiven: true }, {value: "3", initialGiven: true }, {value: "", initialGiven: false }, {value: "", initialGiven: false }],
+                [{value: "", initialGiven: false }, {value: "3", initialGiven: true }, {value: "4", initialGiven: true }, {value: "", initialGiven: false }, {value: "6", initialGiven: true }, {value: "9", initialGiven: true }, {value: "", initialGiven: false }, {value: "", initialGiven: false }, {value: "", initialGiven: false }]
             ]
     }
 
@@ -189,13 +189,16 @@ function buildRequest(){
 
     console.log("current data: " + JSON.stringify(currentData));
     for (var row=0;row<9;row++) {
-        //clone a copy of the current row array
-        var currentRow = [...currentData[row]];
-        for(var cell=0;cell<9;cell++){
-            if(currentRow[cell].trim() === ""){
-                currentRow[cell] = ".";
-            }
-        }
+        //previous approach, prior to changing to ojectsclone a copy of the current row array
+        //var currentRow = [...currentData[row]];
+        //for(var cell=0;cell<9;cell++){
+        //    if(currentRow[cell].trim() === ""){
+        //        currentRow[cell] = ".";
+        //    }
+        //}
+
+        //new approach, post changing to objects
+        var currentRow = currentData[row].map( (currentCell) => currentCell.value === "" ? "." : currentCell.value);
         //join array to a string
         requestData[row] = currentRow.join("");
     }
