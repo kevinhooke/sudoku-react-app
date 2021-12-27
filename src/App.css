@@ -86,3 +86,9 @@
   padding: 20px;
   border: 1px solid;
 }
+
+.pencilCandidateSelected {
+  padding: 20px;
+  margin: 0px;
+  border: 5px solid  #010191;
+}
