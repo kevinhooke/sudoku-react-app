@@ -35,7 +35,6 @@ class SudokuSolver extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClear = this.handleClear.bind(this);
         this.handleResetSample = this.handleResetSample.bind(this);
-        this.buildPencilGridMapEveryRow = this.buildPencilGridMapEveryRow.bind(this);
         this.buildPencilGridForRowCell = this.buildPencilGridForRowCell.bind(this);
     };
 
@@ -86,29 +85,6 @@ class SudokuSolver extends Component {
         console.log('SudokuSolver onError triggered');
     }
 
-    buildPencilGridMapEveryRow(row){
-        console.log("buildPencilGrid() called..., row: " + row);
-        return (
-            <table className="pencilGrid">
-                        {
-                            this.props.pencilMarks[row].map((pencilMarksForSquare) => {
-                                return (
-                                        pencilMarksForSquare.map((pencilRow, pencilRowIndex) => { 
-                                            return [
-                                                <tr key={pencilRowIndex}>
-                                                {pencilRow.map((pencilCell, pencilCellIndex) => {
-                                                    return (<td row={pencilCellIndex} className="pencilCell">{pencilCell}</td>)
-                                                })}
-                                                </tr>
-                                            ]
-                                        })
-                                )
-                            })
-                        }
-            </table>
-        )
-    }
-
     buildPencilGridForRowCell(row,col){
         console.log("buildPencilGridForRowCell() called..., row: " + row + ", col: " + col);
         return (
@@ -120,7 +96,9 @@ class SudokuSolver extends Component {
                                     {
                                         pencilMarksForSquare.map((pencilCell, pencilCellIndex) => {
                                             return [                                            
-                                                    <td row={pencilCellIndex} className="pencilCell">{pencilCell}</td>                                                
+                                                    <td row={pencilCellIndex} className="pencilCell">
+                                                        { pencilCell ? pencilCell : <div>&nbsp;</div> }
+                                                    </td>                                                
                                             ]
                                         })
                                     }
