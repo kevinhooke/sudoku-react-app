@@ -42,39 +42,36 @@
   z-index: 1;
 }
 
-.cell {
-  width: 20px;
-  font-size: 18px;
-}
-
 .sudoku-grid{
   border-collapse: collapse;
   margin: 0 auto;
+  height:70%;
+  width:33%;
 }
 
-.sudoku-grid tbody tr td{
+.sudoku-grid tbody tr td:not(.pencilCell){
   border: 1px solid;
   border-color: blue;
   padding: 1px;
 }
 
 /* set 1st column left border */
-.sudoku-grid tbody tr td:nth-child(1){
+.sudoku-grid tbody tr td:nth-child(1):not(.pencilCell){
   border-left: 3px solid;
 }
 
 /* right border for every 3rd td */
-.sudoku-grid tbody tr td:nth-child(3n){
+.sudoku-grid tbody tr td:nth-child(3n):not(.pencilCell){
   border-right: 3px solid;
 }
 
 /* top border for first row */
-.sudoku-grid tbody tr:nth-child(1){
+.sudoku-grid tbody tr:nth-child(1):not(.pencilCell){
   border-top: 3px solid;
 }
 
 /* bottom border for every 3rd tr row */
-.sudoku-grid tbody tr:nth-child(3n){
+.sudoku-grid tbody tr:nth-child(3n):not(.pencilCell){
   border-bottom: 3px solid;
 }
 
@@ -91,4 +88,37 @@
   padding: 20px;
   margin: 0px;
   border: 5px solid  #010191;
+}
+
+.pencilGrid{
+  border: 0px none;
+  z-index: 5;
+  position: absolute;
+  left:0;
+  top:0;
+  opacity: 40%;
+  width:100%;
+}
+
+.pencilCell{
+  border:0;
+  width:33%;
+}
+
+.cellValue{
+  z-index: 10;
+  position:relative;
+  height:100%;
+  vertical-align: top;
+}
+
+.label{
+  font-size: 30pt;
+  height:100%;
+  vertical-align: top;
+}
+.cell {
+  height: 65px;
+  width: 65px;
+  font-size: 18px;
 }

@@ -15,16 +15,16 @@ class CellComponent extends Component {
     render() {
         let cell = null;
         if(this.props.value.initialGiven){
-            cell = <span>{this.props.value.value}</span>
+            cell = <div>{this.props.value.value}</div>
         }
         else{
             cell = <input className="cell" type="text" value={this.props.value.value} onChange={this.handleChange}/>
         }
 
         return (
-            <span className="label">
+            <div className="label">
                 { cell }
-            </span>
+            </div>
         );
     }
 

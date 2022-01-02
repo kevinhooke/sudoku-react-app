@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { updatePuzzleData, updateSpinner, clearData, initSamplePuzzle, 
     fetchPuzzleStarting, getPuzzle,
     fetchSolutionStarting, fetchPuzzleSolution } from '../actions/actionCreators';
+import '../App.css';
 
 //TODO validation on input fields
 
@@ -34,6 +35,8 @@ class SudokuSolver extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClear = this.handleClear.bind(this);
         this.handleResetSample = this.handleResetSample.bind(this);
+        this.buildPencilGridMapEveryRow = this.buildPencilGridMapEveryRow.bind(this);
+        this.buildPencilGridForRowCell = this.buildPencilGridForRowCell.bind(this);
     };
 
     //handler approach 2:
@@ -46,7 +49,7 @@ class SudokuSolver extends Component {
         this.props.updatePuzzleData(updatedGrid);
     }
 
-    handleSubmit(event) {
+    handleSubmit = (event) => {
         event.preventDefault();
         console.log("submit pressed");
         this.props.fetchSolutionStarting();
@@ -82,6 +85,53 @@ class SudokuSolver extends Component {
     onError(){
         console.log('SudokuSolver onError triggered');
     }
+
+    buildPencilGridMapEveryRow(row){
+        console.log("buildPencilGrid() called..., row: " + row);
+        return (
+            <table className="pencilGrid">
+                        {
+                            this.props.pencilMarks[row].map((pencilMarksForSquare) => {
+                                return (
+                                        pencilMarksForSquare.map((pencilRow, pencilRowIndex) => { 
+                                            return [
+                                                <tr key={pencilRowIndex}>
+                                                {pencilRow.map((pencilCell, pencilCellIndex) => {
+                                                    return (<td row={pencilCellIndex} className="pencilCell">{pencilCell}</td>)
+                                                })}
+                                                </tr>
+                                            ]
+                                        })
+                                )
+                            })
+                        }
+            </table>
+        )
+    }
+
+    buildPencilGridForRowCell(row,col){
+        console.log("buildPencilGridForRowCell() called..., row: " + row + ", col: " + col);
+        return (
+            <table className="pencilGrid">
+                        {
+                            this.props.pencilMarks[row][col].map((pencilMarksForSquare, pencilRowIndex) => {
+                                return [
+                                    <tr key={pencilRowIndex}>
+                                    {
+                                        pencilMarksForSquare.map((pencilCell, pencilCellIndex) => {
+                                            return [                                            
+                                                    <td row={pencilCellIndex} className="pencilCell">{pencilCell}</td>                                                
+                                            ]
+                                        })
+                                    }
+                                    </tr>
+                                ]
+                            })
+                        }
+            </table>
+        )
+    }
+
 
     render() {
         return (
@@ -128,8 +178,16 @@ class SudokuSolver extends Component {
                             {
                                 this.props.grid[0].map((cell, colIndex) => (
                                         <td key={"row0" + colIndex}>
-                                            <CellComponent value={this.props.grid[0][colIndex]}
-                                                        onChange={this.handleGridChange.bind(this, 0, colIndex)}/>
+                                            <div className="cellValue">
+                                                <div className="cellValue">
+                                                    <CellComponent value={this.props.grid[0][colIndex]}
+                                                            onChange={this.handleGridChange.bind(this, 0, colIndex)}/>
+                                                
+                                                    <div>
+                                                    { this.buildPencilGridForRowCell(0, colIndex) }
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     )
                                 )}
@@ -238,6 +296,7 @@ const mapStateToProps = state => {
     }
     return { 
         grid: state.puzzle.grid,
+        pencilMarks: state.puzzle.pencilMarks,
         message: state.puzzle.message,
         showSpinner: state.puzzle.showSpinner,
         puzzleId: state.puzzle.puzzleId,
