@@ -19,7 +19,7 @@ export function controlsReducer(state = control, action) {
                 ...state,
                 selectedPencilValue: action.payload
             }
-       default:
+        default:
             return state;
     }
 }

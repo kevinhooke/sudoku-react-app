@@ -5,7 +5,8 @@ import { NEW_DATA,
     RETRIEVE_SOLUTION_STARTING,
     RETRIEVE_SOLUTION_SUCCESS,
     RETRIEVE_PUZZLE_STARTING,
-    RETRIEVE_PUZZLE_SUCCESS } from '../actions/ActionConstants'; 
+    RETRIEVE_PUZZLE_SUCCESS,
+    PENCIL_UPDATE_FOR_SQUARE } from '../actions/ActionConstants'; 
 
 //pencil marks initial state
 let initialPencilMarks = [
@@ -500,6 +501,28 @@ export function puzzleDataReducer(state = puzzleData, action) {
                 puzzleId: action.payload.puzzleId,
                 puzzleDifficulty: action.payload.puzzleDifficulty
             };
+
+        case PENCIL_UPDATE_FOR_SQUARE:
+
+            let updatedPencilGrid = state.pencilMarks.slice();
+            //TODO
+            let updatedGridForSquare = updatedPencilGrid[action.payload.row][action.payload.col];
+            //to help with displaying the grid, the pencil grid values are split across 3 rows
+            if(action.payload.value < 4){
+                updatedGridForSquare[0][action.payload.value-1] = action.payload.value;
+            }
+            else if(action.payload.value > 3 && action.payload.value < 7){
+                updatedGridForSquare[1][action.payload.value - 4] = action.payload.value;
+            }
+            else{
+                updatedGridForSquare[2][action.payload.value - 7] = action.payload.value;
+            }
+            updatedPencilGrid[action.payload.row][action.payload.col] = updatedGridForSquare;
+            return {
+                ...state,
+                pencilMarks: updatedPencilGrid,
+            }
+    
 
         case 'ERROR' :
             return{ ...state, message : action.message};

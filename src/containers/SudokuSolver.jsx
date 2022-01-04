@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { updatePuzzleData, updateSpinner, clearData, initSamplePuzzle, 
     fetchPuzzleStarting, getPuzzle,
     fetchSolutionStarting, fetchPuzzleSolution } from '../actions/actionCreators';
+    import { updatePencilGridForSquare } from '../actions/controlActions';
 import '../App.css';
 
 //TODO validation on input fields
@@ -36,6 +37,7 @@ class SudokuSolver extends Component {
         this.handleClear = this.handleClear.bind(this);
         this.handleResetSample = this.handleResetSample.bind(this);
         this.buildPencilGridForRowCell = this.buildPencilGridForRowCell.bind(this);
+        this.handlePencilGridClick = this.handlePencilGridClick.bind(this);
     };
 
     //handler approach 2:
@@ -85,10 +87,16 @@ class SudokuSolver extends Component {
         console.log('SudokuSolver onError triggered');
     }
 
+    handlePencilGridClick(row, col){
+        console.log("handlePencilGridClick called for row, col: " + row + ", " + col + ", pencil: "
+            + this.props.selectedPencilValue);
+        this.props.updatePencilGridForSquare(row, col, this.props.selectedPencilValue);
+    }
+
     buildPencilGridForRowCell(row,col){
         console.log("buildPencilGridForRowCell() called..., row: " + row + ", col: " + col);
         return (
-            <table className="pencilGrid">
+            <table className="pencilGrid" onClick={() => this.handlePencilGridClick(row, col)}>
                         {
                             this.props.pencilMarks[row][col].map((pencilMarksForSquare, pencilRowIndex) => {
                                 return [
@@ -278,7 +286,8 @@ const mapStateToProps = state => {
         message: state.puzzle.message,
         showSpinner: state.puzzle.showSpinner,
         puzzleId: state.puzzle.puzzleId,
-        puzzleDifficulty: state.puzzle.puzzleDifficulty
+        puzzleDifficulty: state.puzzle.puzzleDifficulty,
+        selectedPencilValue: state.controls.selectedPencilValue,
      };
 };
 
@@ -291,7 +300,8 @@ const mapDispatchToProps = (dispatch) => {
         fetchPuzzleSolution : () => dispatch(fetchPuzzleSolution()),
         fetchPuzzleStarting : () => dispatch(fetchPuzzleStarting()),
         getPuzzle : (difficulty) => dispatch(getPuzzle(difficulty)),
-        updateSpinner : (value) => dispatch(updateSpinner(value))
+        updateSpinner : (value) => dispatch(updateSpinner(value)),
+        updatePencilGridForSquare : (row, col, value) => dispatch(updatePencilGridForSquare(row, col, value)),
     }
 }
 
