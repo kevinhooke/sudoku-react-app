@@ -95,6 +95,9 @@ class SudokuSolver extends Component {
 
     buildPencilGridForRowCell(row,col){
         console.log("buildPencilGridForRowCell() called..., row: " + row + ", col: " + col);
+
+        //TODO handle onclick when pencil is not selected, set guess in square instead
+
         return (
             <table className="pencilGrid" onClick={() => this.handlePencilGridClick(row, col)}>
                         {
@@ -183,8 +186,16 @@ class SudokuSolver extends Component {
 
                                 this.props.grid[1].map((cell, colIndex) => (
                                         <td key={"row1" + colIndex}>
-                                            <CellComponent value={this.props.grid[1][colIndex]}
-                                                        onChange={this.handleGridChange.bind(this, 1, colIndex)}/>
+                                            <div className="cellValue">
+                                                <div className="cellValue">
+                                                    <CellComponent value={this.props.grid[1][colIndex]}
+                                                            onChange={this.handleGridChange.bind(this, 1, colIndex)}/>
+                                                
+                                                    <div>
+                                                    { this.buildPencilGridForRowCell(1, colIndex) }
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     )
                                 )}
@@ -193,8 +204,16 @@ class SudokuSolver extends Component {
                             {
                                 this.props.grid[2].map((cell, colIndex) => (
                                         <td key={"row2" + colIndex}>
-                                            <CellComponent value={this.props.grid[2][colIndex]}
-                                                        onChange={this.handleGridChange.bind(this, 2, colIndex)}/>
+                                            <div className="cellValue">
+                                                <div className="cellValue">
+                                                    <CellComponent value={this.props.grid[2][colIndex]}
+                                                            onChange={this.handleGridChange.bind(this, 2, colIndex)}/>
+                                                
+                                                    <div>
+                                                    { this.buildPencilGridForRowCell(2, colIndex) }
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     )
                                 )}
@@ -203,8 +222,16 @@ class SudokuSolver extends Component {
                             {
                                 this.props.grid[3].map((cell, colIndex) => (
                                         <td key={"row3" + colIndex}>
-                                            <CellComponent value={this.props.grid[3][colIndex]}
-                                                        onChange={this.handleGridChange.bind(this, 3, colIndex)}/>
+                                            <div className="cellValue">
+                                                <div className="cellValue">
+                                                    <CellComponent value={this.props.grid[3][colIndex]}
+                                                            onChange={this.handleGridChange.bind(this, 3, colIndex)}/>
+                                                
+                                                    <div>
+                                                    { this.buildPencilGridForRowCell(3, colIndex) }
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     )
                                 )}
@@ -213,8 +240,16 @@ class SudokuSolver extends Component {
                             {
                                 this.props.grid[4].map((cell, colIndex) => (
                                         <td key={"row4" + colIndex}>
-                                            <CellComponent value={this.props.grid[4][colIndex]}
-                                                        onChange={this.handleGridChange.bind(this, 4, colIndex)}/>
+                                            <div className="cellValue">
+                                                <div className="cellValue">
+                                                    <CellComponent value={this.props.grid[4][colIndex]}
+                                                            onChange={this.handleGridChange.bind(this, 4, colIndex)}/>
+                                                
+                                                    <div>
+                                                    { this.buildPencilGridForRowCell(4, colIndex) }
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     )
                                 )}
@@ -223,8 +258,16 @@ class SudokuSolver extends Component {
                             {
                                 this.props.grid[5].map((cell, colIndex) => (
                                         <td key={"row5" + colIndex}>
-                                            <CellComponent value={this.props.grid[5][colIndex]}
-                                                        onChange={this.handleGridChange.bind(this, 5, colIndex)}/>
+                                            <div className="cellValue">
+                                                <div className="cellValue">
+                                                    <CellComponent value={this.props.grid[5][colIndex]}
+                                                            onChange={this.handleGridChange.bind(this, 5, colIndex)}/>
+                                                
+                                                    <div>
+                                                    { this.buildPencilGridForRowCell(5, colIndex) }
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     )
                                 )}
@@ -233,8 +276,16 @@ class SudokuSolver extends Component {
                             {
                                 this.props.grid[6].map((cell, colIndex) => (
                                         <td key={"row6" + colIndex}>
-                                            <CellComponent value={this.props.grid[6][colIndex]}
-                                                        onChange={this.handleGridChange.bind(this, 6, colIndex)}/>
+                                            <div className="cellValue">
+                                                <div className="cellValue">
+                                                    <CellComponent value={this.props.grid[6][colIndex]}
+                                                            onChange={this.handleGridChange.bind(this, 6, colIndex)}/>
+                                                
+                                                    <div>
+                                                    { this.buildPencilGridForRowCell(6, colIndex) }
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     )
                                 )}
@@ -243,8 +294,16 @@ class SudokuSolver extends Component {
                             {
                                 this.props.grid[7].map((cell, colIndex) => (
                                         <td key={"row7" + colIndex}>
-                                            <CellComponent value={this.props.grid[7][colIndex]}
-                                                        onChange={this.handleGridChange.bind(this, 7, colIndex)}/>
+                                            <div className="cellValue">
+                                                <div className="cellValue">
+                                                    <CellComponent value={this.props.grid[7][colIndex]}
+                                                            onChange={this.handleGridChange.bind(this, 7, colIndex)}/>
+                                                
+                                                    <div>
+                                                    { this.buildPencilGridForRowCell(7, colIndex) }
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     )
                                 )}
@@ -253,8 +312,16 @@ class SudokuSolver extends Component {
                             {
                                 this.props.grid[8].map((cell, colIndex) => (
                                         <td key={"row8" + colIndex}>
-                                            <CellComponent value={this.props.grid[8][colIndex]}
-                                                        onChange={this.handleGridChange.bind(this, 8, colIndex)}/>
+                                            <div className="cellValue">
+                                                <div className="cellValue">
+                                                    <CellComponent value={this.props.grid[8][colIndex]}
+                                                            onChange={this.handleGridChange.bind(this, 8, colIndex)}/>
+                                                
+                                                    <div>
+                                                    { this.buildPencilGridForRowCell(8, colIndex) }
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     )
                                 )}

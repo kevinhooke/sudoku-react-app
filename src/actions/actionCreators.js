@@ -177,7 +177,8 @@ function parseResponse(response){
         let rowValues = temp[row];
         parsedData[row] = rowValues.split('');
         //replace '.'s with '' for display in the grid
-        parsedData[row] = parsedData[row].map( (value, index) => { return value === '.' ? '' : value});
+        parsedData[row] = parsedData[row].map( (value, index) => 
+            { return value === '.' ? "" : value })
     }
     return parsedData;
 }
