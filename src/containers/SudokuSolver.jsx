@@ -5,7 +5,8 @@ import PuzzleControls from "../components/puzzleControls/PuzzleControls";
 import { connect } from 'react-redux';
 import { updatePuzzleData, updateSpinner, clearData, initSamplePuzzle, 
     fetchPuzzleStarting, getPuzzle,
-    fetchSolutionStarting, fetchPuzzleSolution } from '../actions/actionCreators';
+    fetchSolutionStarting, fetchPuzzleSolution,
+    updateValueForSquare } from '../actions/actionCreators';
     import { updatePencilGridForSquare } from '../actions/controlActions';
 import '../App.css';
 
@@ -90,7 +91,12 @@ class SudokuSolver extends Component {
     handlePencilGridClick(row, col){
         console.log("handlePencilGridClick called for row, col: " + row + ", " + col + ", pencil: "
             + this.props.selectedPencilValue);
-        this.props.updatePencilGridForSquare(row, col, this.props.selectedPencilValue);
+        if(this.props.pencilControlSelected){
+            this.props.updatePencilGridForSquare(row, col, this.props.selectedPencilValue);
+        }
+        else{
+            this.props.updateValueForSquare(this.props.grid, row, col, this.props.selectedPencilValue);
+        }
     }
 
     buildPencilGridForRowCell(row,col){
@@ -354,6 +360,7 @@ const mapStateToProps = state => {
         showSpinner: state.puzzle.showSpinner,
         puzzleId: state.puzzle.puzzleId,
         puzzleDifficulty: state.puzzle.puzzleDifficulty,
+        pencilControlSelected : state.controls.pencilControlSelected,
         selectedPencilValue: state.controls.selectedPencilValue,
      };
 };
@@ -369,6 +376,7 @@ const mapDispatchToProps = (dispatch) => {
         getPuzzle : (difficulty) => dispatch(getPuzzle(difficulty)),
         updateSpinner : (value) => dispatch(updateSpinner(value)),
         updatePencilGridForSquare : (row, col, value) => dispatch(updatePencilGridForSquare(row, col, value)),
+        updateValueForSquare : (grid, row, col, value) => dispatch(updateValueForSquare(grid, row, col, value)),
     }
 }
 

@@ -6,7 +6,8 @@ import { NEW_DATA,
     RETRIEVE_SOLUTION_SUCCESS,
     RETRIEVE_PUZZLE_STARTING,
     RETRIEVE_PUZZLE_SUCCESS,
-    PENCIL_UPDATE_FOR_SQUARE } from '../actions/ActionConstants'; 
+    PENCIL_UPDATE_FOR_SQUARE,
+    VALUE_UPDATE_FOR_SQUARE } from '../actions/ActionConstants'; 
 
 //pencil marks initial state
 let initialPencilMarks = [
@@ -526,6 +527,15 @@ export function puzzleDataReducer(state = puzzleData, action) {
                 pencilMarks: updatedPencilGrid,
             }
     
+        case VALUE_UPDATE_FOR_SQUARE:
+            //TODO need to pass row, col, newValue and grid in payload
+            let updatedGrid = action.payload.grid.slice();
+            updatedGrid[action.payload.row][action.payload.col] = { value: action.payload.value.toString(), initialGiven: false }
+            //TODO update gird with new value
+            return {
+                ...state,
+                grid: updatedGrid
+            }
 
         case 'ERROR' :
             return{ ...state, message : action.message};

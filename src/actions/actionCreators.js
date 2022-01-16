@@ -8,7 +8,8 @@ import { NEW_DATA,
     RETRIEVE_SOLUTION_STARTING,
     RETRIEVE_SOLUTION_SUCCESS,
     RETRIEVE_PUZZLE_STARTING,
-    RETRIEVE_PUZZLE_SUCCESS } from './ActionConstants'; 
+    RETRIEVE_PUZZLE_SUCCESS,
+    VALUE_UPDATE_FOR_SQUARE } from './ActionConstants'; 
 import config from '../config.js';
 
 const emptyGrid = {
@@ -60,6 +61,16 @@ export function initSamplePuzzle(){
         type: RESET_SAMPLE_PUZZLE,
         grid: puzzle.rows
     };
+}
+
+export const updateValueForSquare = (grid, row, col, value) => {
+    let payload = {
+        grid: grid,
+        row: row,
+        col: col,
+        value: value
+    }
+    return { type: VALUE_UPDATE_FOR_SQUARE, payload: payload }
 }
 
 export const fetchPuzzleFailed = (payload) => {
