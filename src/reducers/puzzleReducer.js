@@ -511,15 +511,19 @@ export function puzzleDataReducer(state = puzzleData, action) {
             let updatedGridForSquare = updatedPencilGrid[action.payload.row][action.payload.col];
 
             //to help with displaying the grid, the pencil grid values are split across 3 rows
+            //if cell already has this pencil value set then clear it, otherwise set it
             //TODO create constants for these values
             if(action.payload.value < 4){
-                updatedGridForSquare[0][action.payload.value-1] = action.payload.value;
+                updatedGridForSquare[0][action.payload.value-1] == action.payload.value ?
+                    updatedGridForSquare[0][action.payload.value-1] = "" : updatedGridForSquare[0][action.payload.value-1] = action.payload.value;
             }
             else if(action.payload.value > 3 && action.payload.value < 7){
-                updatedGridForSquare[1][action.payload.value - 4] = action.payload.value;
+                updatedGridForSquare[1][action.payload.value - 4] == action.payload.value ?
+                updatedGridForSquare[1][action.payload.value - 4] = "" : updatedGridForSquare[1][action.payload.value - 4] = action.payload.value;
             }
             else{
-                updatedGridForSquare[2][action.payload.value - 7] = action.payload.value;
+                updatedGridForSquare[2][action.payload.value - 7] == action.payload.value ?
+                updatedGridForSquare[2][action.payload.value - 7] = "" : updatedGridForSquare[2][action.payload.value - 7] = action.payload.value;
             }
             updatedPencilGrid[action.payload.row][action.payload.col] = updatedGridForSquare;
             return {
@@ -530,8 +534,14 @@ export function puzzleDataReducer(state = puzzleData, action) {
         case VALUE_UPDATE_FOR_SQUARE:
             //TODO need to pass row, col, newValue and grid in payload
             let updatedGrid = action.payload.grid.slice();
-            updatedGrid[action.payload.row][action.payload.col] = { value: action.payload.value.toString(), initialGiven: false }
-            //TODO update gird with new value
+            //if cell has same value as currently selected in the controls then remove the value
+            if(updatedGrid[action.payload.row][action.payload.col].value === action.payload.value.toString()){
+                updatedGrid[action.payload.row][action.payload.col] = { value: "", initialGiven: false }
+            }
+            else{
+                updatedGrid[action.payload.row][action.payload.col] = { value: action.payload.value.toString(), initialGiven: false }
+            }
+                //update gird with new value
             return {
                 ...state,
                 grid: updatedGrid

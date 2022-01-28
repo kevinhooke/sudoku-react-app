@@ -9,7 +9,12 @@ const PuzzleControls = (props) => {
 
     const handlePencilSelection = (value) => {
         console.log("Pencil selection: " + value);
-        props.changePencilSelection(value);
+        if(props.selectedPencilValue === value){
+            props.changePencilSelection("");
+        }
+        else{
+            props.changePencilSelection(value);
+        }
     }
     
     return(

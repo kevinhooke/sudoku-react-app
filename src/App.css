@@ -121,5 +121,6 @@
 .cell {
   height: 65px;
   width: 65px;
-  font-size: 18px;
+  font-size: 30pt;
+  color: cornflowerblue;
 }
