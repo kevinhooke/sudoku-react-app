@@ -7,6 +7,7 @@ import { NEW_DATA,
     RETRIEVE_PUZZLE_STARTING,
     RETRIEVE_PUZZLE_SUCCESS,
     PENCIL_UPDATE_FOR_SQUARE,
+    CLEAR_PENCIL_MARKS_FOR_SQUARE,
     VALUE_UPDATE_FOR_SQUARE } from '../actions/ActionConstants'; 
 
 //pencil marks initial state
@@ -447,6 +448,8 @@ let initialPencilMarks = [
 
 //initial state
 var puzzleData = {
+    grid: [],
+    solutionGrid: [],
     showSpinner: false,
     fetchPuzzleStarted: false,
     pencilMarks: initialPencilMarks,
@@ -484,7 +487,7 @@ export function puzzleDataReducer(state = puzzleData, action) {
                 newData[row] = action.payload.data[row].map( (currentValue) => ( { value: currentValue, initialGiven: false } ) );
             }
             return { ...state, 
-                grid : newData,
+                solutionGrid : newData,
                 showSpinner : "false",
                 fetchPuzzleStarted: false
             };
@@ -530,9 +533,22 @@ export function puzzleDataReducer(state = puzzleData, action) {
                 ...state,
                 pencilMarks: updatedPencilGrid,
             }
-    
+
+        case CLEAR_PENCIL_MARKS_FOR_SQUARE:
+            //TODO
+            let updatedPencilGridForClear = state.pencilMarks.slice();
+            updatedPencilGridForClear[action.payload.row][action.payload.col] = [
+                ["", "", ""], 
+                ["", "", ""],
+                ["", "", ""],
+            ];
+        return {
+            ...state,
+            pencilMarks: updatedPencilGridForClear,
+        }
+
         case VALUE_UPDATE_FOR_SQUARE:
-            //TODO need to pass row, col, newValue and grid in payload
+            //pass row, col, newValue and grid in payload
             let updatedGrid = action.payload.grid.slice();
             //if cell has same value as currently selected in the controls then remove the value
             if(updatedGrid[action.payload.row][action.payload.col].value === action.payload.value.toString()){
@@ -541,7 +557,7 @@ export function puzzleDataReducer(state = puzzleData, action) {
             else{
                 updatedGrid[action.payload.row][action.payload.col] = { value: action.payload.value.toString(), initialGiven: false }
             }
-                //update gird with new value
+                //update grid state with updated grid
             return {
                 ...state,
                 grid: updatedGrid

@@ -124,3 +124,7 @@
   font-size: 30pt;
   color: cornflowerblue;
 }
+
+.cell-incorrect {
+  color: red;
+}

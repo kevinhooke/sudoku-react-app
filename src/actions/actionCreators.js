@@ -99,7 +99,7 @@ export const fetchPuzzleSucess = (updatePayload) => {
     }
 }
 
-export const fetchPuzzleSolution = () => (dispatch) => {
+export const fetchPuzzleSolution = (displaySolution) => (dispatch) => {
     console.log("actionCreators: fetchPuzzleSolution()");
 
     var requestPayload = {};

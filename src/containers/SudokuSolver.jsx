@@ -7,7 +7,7 @@ import { updatePuzzleData, updateSpinner, clearData, initSamplePuzzle,
     fetchPuzzleStarting, getPuzzle,
     fetchSolutionStarting, fetchPuzzleSolution,
     updateValueForSquare } from '../actions/actionCreators';
-    import { updatePencilGridForSquare } from '../actions/controlActions';
+    import { updatePencilGridForSquare, clearPencilGridForSquare } from '../actions/controlActions';
 import '../App.css';
 
 //TODO validation on input fields
@@ -53,11 +53,15 @@ class SudokuSolver extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log("submit pressed");
-        this.props.fetchSolutionStarting();
+        //fetch solution for display
+        this.props.fetchSolutionStarting(true);
         this.props.updateSpinner("true");
         this.props.fetchPuzzleSolution();
         //this.props.updateSpinner(false);
+    }
+
+    handleCheckCorrect = (event) => {
+        //TODO
     }
 
     handleClear(event) {
@@ -95,6 +99,7 @@ class SudokuSolver extends Component {
             this.props.updatePencilGridForSquare(row, col, this.props.selectedPencilValue);
         }
         else{
+            this.props.clearPencilGridForSquare(row, col);
             this.props.updateValueForSquare(this.props.grid, row, col, this.props.selectedPencilValue);
         }
     }
@@ -139,7 +144,10 @@ class SudokuSolver extends Component {
                 <div className="button-container">
                     <div id="messages">{this.props.message}</div>
                     <div>
-                        <button className="buttons" onClick={this.handleSubmit}>Solve Puzzle</button>
+                        <button className="buttons" onClick={this.handleCheckCorrect}>Check puzzle correct</button>
+                    </div>
+                    <div>
+                        <button className="buttons" onClick={this.handleSubmit}>Show puzzle solution</button>
                     </div>
                     <div>
                         <button className="buttons" onClick={this.handleClear}>Clear grid</button>
@@ -150,14 +158,15 @@ class SudokuSolver extends Component {
                     <div>
                         <br/>
                     </div>
+                    <div>Load a puzzle:</div>
                     <div>
-                        <button onClick={ () => this.handleGetPuzzle('EASY')}>Load easy puzzle</button>                        
+                        <button onClick={ () => this.handleGetPuzzle('EASY')}>Easy puzzle</button>                        
                     </div>
                     <div>
-                        <button onClick={ () => this.handleGetPuzzle('MEDIUM')}>Load medium puzzle</button>
+                        <button onClick={ () => this.handleGetPuzzle('MEDIUM')}>Medium puzzle</button>
                     </div>
                     <div>
-                        <button onClick={() => this.handleGetPuzzle('HARD')}>Load hard puzzle</button>
+                        <button onClick={() => this.handleGetPuzzle('HARD')}>Hard puzzle</button>
                     </div>
 
                     <div>
@@ -371,11 +380,12 @@ const mapDispatchToProps = (dispatch) => {
         clearData : () => dispatch(clearData()),
         initSamplePuzzle : () => dispatch(initSamplePuzzle()),
         fetchSolutionStarting : () => dispatch(fetchSolutionStarting()),
-        fetchPuzzleSolution : () => dispatch(fetchPuzzleSolution()),
+        fetchPuzzleSolution : (displaySolution) => dispatch(fetchPuzzleSolution(displaySolution)),
         fetchPuzzleStarting : () => dispatch(fetchPuzzleStarting()),
         getPuzzle : (difficulty) => dispatch(getPuzzle(difficulty)),
         updateSpinner : (value) => dispatch(updateSpinner(value)),
         updatePencilGridForSquare : (row, col, value) => dispatch(updatePencilGridForSquare(row, col, value)),
+        clearPencilGridForSquare : (row, col) => dispatch(clearPencilGridForSquare(row, col)),
         updateValueForSquare : (grid, row, col, value) => dispatch(updateValueForSquare(grid, row, col, value)),
     }
 }
