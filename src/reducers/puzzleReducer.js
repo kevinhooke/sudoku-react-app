@@ -446,7 +446,10 @@ let initialPencilMarks = [
 
 ]
 
-//initial state
+//initial state:
+// grid : tracks state for current puzzle
+// solutionGrid: holds the retrieved solution for the current puzzle
+// pencilMarks: tracks the state for the user entered pencil marks for the current puzzle
 var puzzleData = {
     grid: [],
     solutionGrid: [],
@@ -555,7 +558,11 @@ export function puzzleDataReducer(state = puzzleData, action) {
                 updatedGrid[action.payload.row][action.payload.col] = { value: "", initialGiven: false }
             }
             else{
-                updatedGrid[action.payload.row][action.payload.col] = { value: action.payload.value.toString(), initialGiven: false }
+                //TODO debug this - missing value on check puzzle?
+                updatedGrid[action.payload.row][action.payload.col] = { 
+                    value: action.payload.value.toString(),
+                    initialGiven: false,
+                    correctGuess: action.payload.correctGuess }
             }
                 //update grid state with updated grid
             return {

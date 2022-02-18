@@ -63,12 +63,13 @@ export function initSamplePuzzle(){
     };
 }
 
-export const updateValueForSquare = (grid, row, col, value) => {
+export const updateValueForSquare = (grid, row, col, value, correctGuess) => {
     let payload = {
         grid: grid,
         row: row,
         col: col,
-        value: value
+        value: value,
+        correctGuess: correctGuess
     }
     return { type: VALUE_UPDATE_FOR_SQUARE, payload: payload }
 }
@@ -99,7 +100,7 @@ export const fetchPuzzleSucess = (updatePayload) => {
     }
 }
 
-export const fetchPuzzleSolution = (displaySolution) => (dispatch) => {
+export const fetchPuzzleSolution = () => (dispatch) => {
     console.log("actionCreators: fetchPuzzleSolution()");
 
     var requestPayload = {};
@@ -134,6 +135,13 @@ export const fetchPuzzleSolution = (displaySolution) => (dispatch) => {
         });
 }
 
+/**
+ * Action to retrieve a puzzle. After puzzle retrieved, also calls action creator fetchPuzzleSolution()
+ * to load the solution for this puzzle.
+ * 
+ * @param {*} difficulty 
+ * @returns 
+ */
 export const getPuzzle = (difficulty) => async (dispatch) => {
     console.log("actionCreators: getPuzzle(): " + difficulty);
 
@@ -173,7 +181,10 @@ export const getPuzzle = (difficulty) => async (dispatch) => {
                     dispatch({
                         type: RETRIEVE_PUZZLE_SUCCESS,
                         payload: updatePayload
-                    })
+                    });
+
+                    //dispatch solve puzzle action so we have the solved solution for this puzzle to check player progress
+                    dispatch(fetchPuzzleSolution());
                 }
             }
         });

@@ -62,6 +62,23 @@ class SudokuSolver extends Component {
 
     handleCheckCorrect = (event) => {
         //TODO
+        this.props.grid.forEach( (row, rowIndex) => {
+            row.forEach( (cell, cellIndex) => {
+                console.log("row, cell: " + rowIndex + "," + cellIndex + ": " + JSON.stringify(cell));
+                console.log("cell solution: " + JSON.stringify(this.props.solutionGrid[rowIndex][cellIndex]));
+                if(!cell.initialGiven){
+                    if(cell.value === this.props.solutionGrid[rowIndex][cellIndex].value){
+                        console.log("... cell is correct!");
+                        this.props.updateValueForSquare(this.props.grid, rowIndex, cellIndex, cell.value, true);
+                    }
+                    else{
+                        console.log("... cell is incorrect");
+                        this.props.updateValueForSquare(this.props.grid, rowIndex, cellIndex, cell.value, false);
+                    }
+                }
+
+            });
+        });
     }
 
     handleClear(event) {
@@ -144,7 +161,7 @@ class SudokuSolver extends Component {
                 <div className="button-container">
                     <div id="messages">{this.props.message}</div>
                     <div>
-                        <button className="buttons" onClick={this.handleCheckCorrect}>Check puzzle correct</button>
+                        <button className="buttons" onClick={this.handleCheckCorrect}>Check puzzle solution</button>
                     </div>
                     <div>
                         <button className="buttons" onClick={this.handleSubmit}>Show puzzle solution</button>
@@ -356,7 +373,7 @@ class SudokuSolver extends Component {
 const mapStateToProps = state => {
     //if grid is undefined, initialize with empty arrays which we use later
     //to draw the grid
-    if(state.puzzle.grid == null){
+    if(state.puzzle.grid == null || state.puzzle.grid.length == 0){
         state.puzzle.grid = [];
         for (var row = 0; row < 9; row++) {
             state.puzzle.grid[row] = [];
@@ -364,6 +381,7 @@ const mapStateToProps = state => {
     }
     return { 
         grid: state.puzzle.grid,
+        solutionGrid: state.puzzle.solutionGrid,
         pencilMarks: state.puzzle.pencilMarks,
         message: state.puzzle.message,
         showSpinner: state.puzzle.showSpinner,
