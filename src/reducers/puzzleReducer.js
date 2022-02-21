@@ -6,9 +6,10 @@ import { NEW_DATA,
     RETRIEVE_SOLUTION_SUCCESS,
     RETRIEVE_PUZZLE_STARTING,
     RETRIEVE_PUZZLE_SUCCESS,
-    PENCIL_UPDATE_FOR_SQUARE,
-    CLEAR_PENCIL_MARKS_FOR_SQUARE,
-    VALUE_UPDATE_FOR_SQUARE } from '../actions/ActionConstants'; 
+    PENCIL_UPDATE_FOR_CELL,
+    CLEAR_PENCIL_MARKS_FOR_CELL,
+    VALUE_UPDATE_FOR_CELL,
+    CORRECT_GUESS_UPDATE_FOR_CELL } from '../actions/ActionConstants'; 
 
 //pencil marks initial state
 let initialPencilMarks = [
@@ -511,33 +512,33 @@ export function puzzleDataReducer(state = puzzleData, action) {
             };
         
         //TODO refactor this and move to controlsReducer
-        case PENCIL_UPDATE_FOR_SQUARE:
+        case PENCIL_UPDATE_FOR_CELL:
 
             let updatedPencilGrid = state.pencilMarks.slice();
-            let updatedGridForSquare = updatedPencilGrid[action.payload.row][action.payload.col];
+            let updatedGridForCell = updatedPencilGrid[action.payload.row][action.payload.col];
 
             //to help with displaying the grid, the pencil grid values are split across 3 rows
             //if cell already has this pencil value set then clear it, otherwise set it
             //TODO create constants for these values
             if(action.payload.value < 4){
-                updatedGridForSquare[0][action.payload.value-1] == action.payload.value ?
-                    updatedGridForSquare[0][action.payload.value-1] = "" : updatedGridForSquare[0][action.payload.value-1] = action.payload.value;
+                updatedGridForCell[0][action.payload.value-1] == action.payload.value ?
+                    updatedGridForCell[0][action.payload.value-1] = "" : updatedGridForCell[0][action.payload.value-1] = action.payload.value;
             }
             else if(action.payload.value > 3 && action.payload.value < 7){
-                updatedGridForSquare[1][action.payload.value - 4] == action.payload.value ?
-                updatedGridForSquare[1][action.payload.value - 4] = "" : updatedGridForSquare[1][action.payload.value - 4] = action.payload.value;
+                updatedGridForCell[1][action.payload.value - 4] == action.payload.value ?
+                updatedGridForCell[1][action.payload.value - 4] = "" : updatedGridForCell[1][action.payload.value - 4] = action.payload.value;
             }
             else{
-                updatedGridForSquare[2][action.payload.value - 7] == action.payload.value ?
-                updatedGridForSquare[2][action.payload.value - 7] = "" : updatedGridForSquare[2][action.payload.value - 7] = action.payload.value;
+                updatedGridForCell[2][action.payload.value - 7] == action.payload.value ?
+                updatedGridForCell[2][action.payload.value - 7] = "" : updatedGridForCell[2][action.payload.value - 7] = action.payload.value;
             }
-            updatedPencilGrid[action.payload.row][action.payload.col] = updatedGridForSquare;
+            updatedPencilGrid[action.payload.row][action.payload.col] = updatedGridForCell;
             return {
                 ...state,
                 pencilMarks: updatedPencilGrid,
             }
 
-        case CLEAR_PENCIL_MARKS_FOR_SQUARE:
+        case CLEAR_PENCIL_MARKS_FOR_CELL:
             //TODO
             let updatedPencilGridForClear = state.pencilMarks.slice();
             updatedPencilGridForClear[action.payload.row][action.payload.col] = [
@@ -550,7 +551,7 @@ export function puzzleDataReducer(state = puzzleData, action) {
             pencilMarks: updatedPencilGridForClear,
         }
 
-        case VALUE_UPDATE_FOR_SQUARE:
+        case VALUE_UPDATE_FOR_CELL:
             //pass row, col, newValue and grid in payload
             let updatedGrid = action.payload.grid.slice();
             //if cell has same value as currently selected in the controls then remove the value
@@ -558,7 +559,6 @@ export function puzzleDataReducer(state = puzzleData, action) {
                 updatedGrid[action.payload.row][action.payload.col] = { value: "", initialGiven: false }
             }
             else{
-                //TODO debug this - missing value on check puzzle?
                 updatedGrid[action.payload.row][action.payload.col] = { 
                     value: action.payload.value.toString(),
                     initialGiven: false,
@@ -570,6 +570,20 @@ export function puzzleDataReducer(state = puzzleData, action) {
                 grid: updatedGrid
             }
 
+            case CORRECT_GUESS_UPDATE_FOR_CELL:
+                //pass row, col, newValue and grid in payload
+                let updatedGridForGuess = action.payload.grid.slice();
+                updatedGridForGuess[action.payload.row][action.payload.col] = { 
+                    value: action.payload.value.toString(),
+                    initialGiven: false,
+                    correctGuess: action.payload.correctGuess
+                }
+                    //update grid state with updated grid
+                return {
+                    ...state,
+                    grid: updatedGridForGuess
+                }
+    
         case 'ERROR' :
             return{ ...state, message : action.message};
 

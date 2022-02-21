@@ -9,7 +9,8 @@ import { NEW_DATA,
     RETRIEVE_SOLUTION_SUCCESS,
     RETRIEVE_PUZZLE_STARTING,
     RETRIEVE_PUZZLE_SUCCESS,
-    VALUE_UPDATE_FOR_SQUARE } from './ActionConstants'; 
+    VALUE_UPDATE_FOR_CELL,
+    CORRECT_GUESS_UPDATE_FOR_CELL } from './ActionConstants'; 
 import config from '../config.js';
 
 const emptyGrid = {
@@ -63,7 +64,7 @@ export function initSamplePuzzle(){
     };
 }
 
-export const updateValueForSquare = (grid, row, col, value, correctGuess) => {
+export const updateValueForCell = (grid, row, col, value, correctGuess) => {
     let payload = {
         grid: grid,
         row: row,
@@ -71,7 +72,19 @@ export const updateValueForSquare = (grid, row, col, value, correctGuess) => {
         value: value,
         correctGuess: correctGuess
     }
-    return { type: VALUE_UPDATE_FOR_SQUARE, payload: payload }
+    return { type: VALUE_UPDATE_FOR_CELL, payload: payload }
+}
+
+
+export const updateCorrectGuessForCell = (grid, row, col, value, correctGuess) => {
+    let payload = {
+        grid: grid,
+        row: row,
+        col: col,
+        value: value,
+        correctGuess: correctGuess
+    }
+    return { type: CORRECT_GUESS_UPDATE_FOR_CELL, payload: payload }
 }
 
 export const fetchPuzzleFailed = (payload) => {

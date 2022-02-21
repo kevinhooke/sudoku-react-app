@@ -18,7 +18,7 @@ class CellComponent extends Component {
             cell = <div>{this.props.value.value}</div>
         }
         else{
-            cell = <input className="cell" type="text" value={this.props.value.value} onChange={this.handleChange}/>
+            cell = <input className={this.props.value.correctGuess == undefined ? "cell" : this.props.value.correctGuess ? "cell cell-correct" : "cell cell-incorrect"} type="text" value={this.props.value.value} onChange={this.handleChange}/>
         }
 
         return (

@@ -128,3 +128,7 @@
 .cell-incorrect {
   color: red;
 }
+
+.cell-correct {
+  color: green;
+}

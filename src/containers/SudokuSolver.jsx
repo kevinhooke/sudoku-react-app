@@ -6,8 +6,9 @@ import { connect } from 'react-redux';
 import { updatePuzzleData, updateSpinner, clearData, initSamplePuzzle, 
     fetchPuzzleStarting, getPuzzle,
     fetchSolutionStarting, fetchPuzzleSolution,
-    updateValueForSquare } from '../actions/actionCreators';
-    import { updatePencilGridForSquare, clearPencilGridForSquare } from '../actions/controlActions';
+    updateValueForCell,
+    updateCorrectGuessForCell } from '../actions/actionCreators';
+    import { updatePencilGridForCell, clearPencilGridForCell } from '../actions/controlActions';
 import '../App.css';
 
 //TODO validation on input fields
@@ -66,14 +67,15 @@ class SudokuSolver extends Component {
             row.forEach( (cell, cellIndex) => {
                 console.log("row, cell: " + rowIndex + "," + cellIndex + ": " + JSON.stringify(cell));
                 console.log("cell solution: " + JSON.stringify(this.props.solutionGrid[rowIndex][cellIndex]));
-                if(!cell.initialGiven){
+                //TODO only check value if there is a user entered guess in this cell
+                if(!cell.initialGiven && cell.value){
                     if(cell.value === this.props.solutionGrid[rowIndex][cellIndex].value){
                         console.log("... cell is correct!");
-                        this.props.updateValueForSquare(this.props.grid, rowIndex, cellIndex, cell.value, true);
+                        this.props.updateCorrectGuessForCell(this.props.grid, rowIndex, cellIndex, cell.value, true);
                     }
                     else{
                         console.log("... cell is incorrect");
-                        this.props.updateValueForSquare(this.props.grid, rowIndex, cellIndex, cell.value, false);
+                        this.props.updateCorrectGuessForCell(this.props.grid, rowIndex, cellIndex, cell.value, false);
                     }
                 }
 
@@ -113,27 +115,27 @@ class SudokuSolver extends Component {
         console.log("handlePencilGridClick called for row, col: " + row + ", " + col + ", pencil: "
             + this.props.selectedPencilValue);
         if(this.props.pencilControlSelected){
-            this.props.updatePencilGridForSquare(row, col, this.props.selectedPencilValue);
+            this.props.updatePencilGridForCell(row, col, this.props.selectedPencilValue);
         }
         else{
-            this.props.clearPencilGridForSquare(row, col);
-            this.props.updateValueForSquare(this.props.grid, row, col, this.props.selectedPencilValue);
+            this.props.clearPencilGridForCell(row, col);
+            this.props.updateValueForCell(this.props.grid, row, col, this.props.selectedPencilValue);
         }
     }
 
     buildPencilGridForRowCell(row,col){
         console.log("buildPencilGridForRowCell() called..., row: " + row + ", col: " + col);
 
-        //TODO handle onclick when pencil is not selected, set guess in square instead
+        //TODO handle onclick when pencil is not selected, set guess in cell instead
 
         return (
             <table className="pencilGrid" onClick={() => this.handlePencilGridClick(row, col)}>
                         {
-                            this.props.pencilMarks[row][col].map((pencilMarksForSquare, pencilRowIndex) => {
+                            this.props.pencilMarks[row][col].map((pencilMarksForCell, pencilRowIndex) => {
                                 return [
                                     <tr key={pencilRowIndex}>
                                     {
-                                        pencilMarksForSquare.map((pencilCell, pencilCellIndex) => {
+                                        pencilMarksForCell.map((pencilCell, pencilCellIndex) => {
                                             return [                                            
                                                     <td row={pencilCellIndex} className="pencilCell">
                                                         { pencilCell ? pencilCell : <div>&nbsp;</div> }
@@ -402,9 +404,11 @@ const mapDispatchToProps = (dispatch) => {
         fetchPuzzleStarting : () => dispatch(fetchPuzzleStarting()),
         getPuzzle : (difficulty) => dispatch(getPuzzle(difficulty)),
         updateSpinner : (value) => dispatch(updateSpinner(value)),
-        updatePencilGridForSquare : (row, col, value) => dispatch(updatePencilGridForSquare(row, col, value)),
-        clearPencilGridForSquare : (row, col) => dispatch(clearPencilGridForSquare(row, col)),
-        updateValueForSquare : (grid, row, col, value) => dispatch(updateValueForSquare(grid, row, col, value)),
+        updatePencilGridForCell : (row, col, value) => dispatch(updatePencilGridForCell(row, col, value)),
+        clearPencilGridForCell : (row, col) => dispatch(clearPencilGridForCell(row, col)),
+        updateValueForCell: (grid, row, col, value) => dispatch(updateValueForCell(grid, row, col, value)),
+        updateCorrectGuessForCell : (grid, row, col, value, correct) => dispatch(updateCorrectGuessForCell(grid, row, col, value, correct)),
+        
     }
 }
 
