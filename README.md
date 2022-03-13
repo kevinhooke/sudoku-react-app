@@ -3,6 +3,6 @@ which provided a Sudoku solver (using Donald Knuth's DLX and Algorithm X : https
 
 
 This project is an evolution of that same app to allow the user to play the puzzle, using established approaches like using
-pencil notes per square. It also includes the integration with the solver and feature to load generated sample projects.
+pencil notes per square. It also includes the integration with the solver and feature to load generated puzzles.
 
 This is currently an in progress project.

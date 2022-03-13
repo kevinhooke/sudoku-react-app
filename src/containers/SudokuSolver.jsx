@@ -11,11 +11,13 @@ import { updatePuzzleData, updateSpinner, clearData, initSamplePuzzle,
     import { updatePencilGridForCell, clearPencilGridForCell } from '../actions/controlActions';
 import '../App.css';
 
+//TODO error on clicking cell with no number guess button selected
+
+//TODO display solution has stopped working
+
 //TODO validation on input fields
 
 //TODO clear error message on each action
-
-//TODO show solving progress/status while waiting for response
 
 //TODO spruce up error message box
 
@@ -61,13 +63,17 @@ class SudokuSolver extends Component {
         //this.props.updateSpinner(false);
     }
 
+    /**
+     * Compares currently entered guesses against the solution for this puzzle. Indicates correct
+     * guesses in green, incorrect guesses with red.
+     * @param {*} event 
+     */
     handleCheckCorrect = (event) => {
-        //TODO
         this.props.grid.forEach( (row, rowIndex) => {
             row.forEach( (cell, cellIndex) => {
                 console.log("row, cell: " + rowIndex + "," + cellIndex + ": " + JSON.stringify(cell));
                 console.log("cell solution: " + JSON.stringify(this.props.solutionGrid[rowIndex][cellIndex]));
-                //TODO only check value if there is a user entered guess in this cell
+
                 if(!cell.initialGiven && cell.value){
                     if(cell.value === this.props.solutionGrid[rowIndex][cellIndex].value){
                         console.log("... cell is correct!");
@@ -78,21 +84,31 @@ class SudokuSolver extends Component {
                         this.props.updateCorrectGuessForCell(this.props.grid, rowIndex, cellIndex, cell.value, false);
                     }
                 }
-
             });
         });
     }
 
+    /**
+     * Clears the puzzle grid.
+     */
     handleClear(event) {
         event.preventDefault();
-        console.log("clear pressed");
         this.props.clearData();
     }
 
+    /**
+     * Reloads the hardcoded sample puzzle.
+     * @param {*} event 
+     */
     handleResetSample(event){
         this.props.initSamplePuzzle();
     }
 
+    /**
+     * Retrieves a puzzle with the requested difficulted from the generated puzzles stored
+     * in DynamoDB.
+     * @param {*} difficulty 
+     */
     handleGetPuzzle = (difficulty) => {
         console.log("handleGetPuzzle(): " + difficulty);
         this.props.fetchPuzzleStarting();
@@ -101,10 +117,11 @@ class SudokuSolver extends Component {
     }
 
     /**
-     * Load initial state with a sample.
+     * Load initial puzzle from generated puzzle in DynamoDB with a solution.
      */
     componentWillMount() {
-        this.props.initSamplePuzzle();
+        //this.props.initSamplePuzzle();
+        this.handleGetPuzzle('EASY');
     }
 
     onError(){
