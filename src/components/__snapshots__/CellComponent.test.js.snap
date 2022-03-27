@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders a Cell Renders cell with initial given value of 1 - snapshot compare 1`] = `
+<div
+  className="label"
+>
+  <input
+    className="cell"
+    onChange={[Function]}
+    type="text"
+    value={1}
+  />
+</div>
+`;
