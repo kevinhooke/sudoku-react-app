@@ -36,7 +36,9 @@
   ],
   "devDependencies": {
     "@babel/preset-react": "^7.16.7",
-    "fsevents": "^2.3.2",
     "react-test-renderer": "^17.0.2"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
   }
 }
