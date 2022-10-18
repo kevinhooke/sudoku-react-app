@@ -15,4 +15,11 @@ jobs:
         with:
           node-version: '16.x'
       - run: npm ci
-      - run: npm run deploy
+      - name: Deploy
+        env:
+          MY_EMAIL: kevin.hooke@gmail.com
+          MY_NAME: Kevin Hooke
+        run: |
+          git config --global user.email $MY_EMAIL
+          git config --global user.name $MY_NAME
+          npm run deploy
