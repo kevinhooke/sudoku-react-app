@@ -1,13 +1,13 @@
 {
   "main.css": "/sudoku-react-app/static/css/main.7bfc1aba.chunk.css",
-  "main.js": "/sudoku-react-app/static/js/main.a3cc4267.chunk.js",
-  "main.js.map": "/sudoku-react-app/static/js/main.a3cc4267.chunk.js.map",
+  "main.js": "/sudoku-react-app/static/js/main.b68eec58.chunk.js",
+  "main.js.map": "/sudoku-react-app/static/js/main.b68eec58.chunk.js.map",
   "runtime~main.js": "/sudoku-react-app/static/js/runtime~main.38729fec.js",
   "runtime~main.js.map": "/sudoku-react-app/static/js/runtime~main.38729fec.js.map",
   "static/js/2.cbc07976.chunk.js": "/sudoku-react-app/static/js/2.cbc07976.chunk.js",
   "static/js/2.cbc07976.chunk.js.map": "/sudoku-react-app/static/js/2.cbc07976.chunk.js.map",
   "index.html": "/sudoku-react-app/index.html",
-  "precache-manifest.6ce0448a754ccb6baffb0873bb4d3469.js": "/sudoku-react-app/precache-manifest.6ce0448a754ccb6baffb0873bb4d3469.js",
+  "precache-manifest.eca26dea6056b5a78e0e29140b49be7b.js": "/sudoku-react-app/precache-manifest.eca26dea6056b5a78e0e29140b49be7b.js",
   "service-worker.js": "/sudoku-react-app/service-worker.js",
   "static/css/main.7bfc1aba.chunk.css.map": "/sudoku-react-app/static/css/main.7bfc1aba.chunk.css.map"
 }
