@@ -19,8 +19,8 @@ jobs:
         env:
           MY_EMAIL: kevin.hooke@gmail.com
           MY_NAME: kevinhooke
-          REACT_APP_ROOT_URL_PUZZLE: ${{ secrets.ROOT_URL_PUZZLE }
-          REACT_APP_ROOT_URL_SOLVER: ${{ secrets.ROOT_URL_SOLVER }
+          REACT_APP_ROOT_URL_PUZZLE: ${{ secrets.ROOT_URL_PUZZLE }}
+          REACT_APP_ROOT_URL_SOLVER: ${{ secrets.ROOT_URL_SOLVER }}
         run: |
           git config --global user.email $MY_EMAIL
           git config --global user.name $MY_NAME
