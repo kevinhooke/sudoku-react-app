@@ -141,7 +141,8 @@ class SudokuSolver extends Component {
     }
 
     buildPencilGridForRowCell(row,col){
-        console.log("buildPencilGridForRowCell() called..., row: " + row + ", col: " + col);
+        //TODO this is called for every render for every cell which is unnecessary
+        //console.log("buildPencilGridForRowCell() called..., row: " + row + ", col: " + col);
 
         //TODO handle onclick when pencil is not selected, set guess in cell instead
 
