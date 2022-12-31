@@ -119,7 +119,7 @@ export const fetchPuzzleSolution = () => (dispatch) => {
     var requestPayload = {};
     requestPayload.rows = buildRequest();
 
-    request.post(config.solverUrl)
+    request.post(process.env.REACT_APP_ROOT_URL_SOLVER + config.solverUrl)
         .send(requestPayload)
         .set('Content-Type', 'application/json')
         .timeout({
@@ -160,7 +160,7 @@ export const getPuzzle = (difficulty) => async (dispatch) => {
 
     var requestPayload = {};
 
-    request.get(config.getPuzzleUrl + '?difficulty=' + difficulty)
+    request.get(process.env.REACT_APP_ROOT_URL_PUZZLE + config.getPuzzleUrl + '?difficulty=' + difficulty)
         .set('Content-Type', 'application/json')
         .timeout({
             response: 10000,  // 10 secs before response
