@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
+//previous version
+//import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress';
 import CellComponent from "../components/CellComponent";
 import PuzzleControls from "../components/puzzleControls/PuzzleControls";
 import { connect } from 'react-redux';
@@ -213,7 +215,7 @@ class SudokuSolver extends Component {
                     </div>
                 </div>
                 <div className="sudoku-grid-container">
-                    <table className="sudoku-grid">
+                    <table aria-label="sudokuGrid" className="sudoku-grid">
                         <tbody>
                         <tr>
                             {
